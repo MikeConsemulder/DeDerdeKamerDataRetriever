@@ -1,5 +1,10 @@
 import { DataSaver } from "./DataSaver.js";
 
+export type DataContext = {
+  endpoint: string;
+  filename: string;
+};
+
 type DataResponse = {
   ["@odata.context"]: string;
   value: any;
@@ -10,11 +15,6 @@ type DataEndPoints = {
   persoon: string;
   persoonGeschenk: string;
   document: string;
-};
-
-type DataContext = {
-  endpoint: string;
-  filename: string;
 };
 
 export const contexts: { [context: string]: DataContext } = {
@@ -29,6 +29,10 @@ export const contexts: { [context: string]: DataContext } = {
   document: {
     endpoint: "document",
     filename: "document",
+  },
+  persoonReis: {
+    endpoint: "PersoonReis",
+    filename: "persoonReis",
   },
 };
 
@@ -55,15 +59,28 @@ export class DataRetriever {
     return dataJson;
   }
 
-  async getDataRecursive(skip: number = 0, context: DataContext) {
-    const data = (await this.getData(skip, context.endpoint)) as DataResponse;
+  async getDataRecursive(
+    skip: number = 0,
+    context: DataContext,
+    skipSavedData: Boolean = true
+  ) {
+    let skipAmount = skip;
 
-    const nextCallSkip = skip + data.value.length;
+    if (skipSavedData) {
+      skipAmount = await DataSaver.getSavedDataCount(context);
+    }
+
+    const data = (await this.getData(
+      skipAmount,
+      context.endpoint
+    )) as DataResponse;
+
+    const nextCallSkip = skipAmount + data.value.length;
 
     if (data.value.length > 0) {
       const response = await DataSaver.saveDataToFile(
         data.value,
-        skip,
+        skipAmount,
         nextCallSkip,
         context.filename
       );

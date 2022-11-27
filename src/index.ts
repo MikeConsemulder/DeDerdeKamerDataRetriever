@@ -1,11 +1,10 @@
 import express from "express";
-import { Context } from "vm";
 import { contexts, DataRetriever } from "./dataRetriever.js";
 const app = express();
 const port = 3000;
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Derde kamer data retriever");
 });
 
 app.get("/saveData/:context", (req, res) => {

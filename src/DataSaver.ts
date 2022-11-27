@@ -1,4 +1,5 @@
-import fs from "fs";
+import fs, { promises } from "fs";
+import { DataContext } from "./dataRetriever";
 import { Person } from "./ts/types/Person";
 
 export const DataSaver = {
@@ -46,5 +47,19 @@ export const DataSaver = {
         });
       });
     });
+  },
+  getSavedDataCount: async (context: DataContext): Promise<number> => {
+    let highestCount = 0;
+    const filenames = await promises.readdir(`./savedData/${context.filename}`);
+
+    for (const filename of filenames) {
+      const fromTillCount = filename.split(`${context.filename}_`)[1];
+      const tillCount = parseInt(fromTillCount.split("-")[1]);
+      if (tillCount > highestCount) {
+        highestCount = tillCount;
+      }
+    }
+	
+    return highestCount;
   },
 };

@@ -34,6 +34,14 @@ export const contexts: { [context: string]: DataContext } = {
     endpoint: "PersoonReis",
     filename: "persoonReis",
   },
+  nevenFunctie: {
+    endpoint: "PersoonNevenfunctie",
+    filename: "nevenFunctie",
+  },
+  nevenFunctieInkomsten: {
+    endpoint: "PersoonNevenfunctieInkomsten",
+    filename: "nevenFunctieInkomsten",
+  },
 };
 
 export class DataRetriever {

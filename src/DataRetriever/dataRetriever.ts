@@ -1,4 +1,4 @@
-import { DataSaver } from "./DataSaver.js";
+import { DataSaver } from "../DataSaver.js";
 
 export type DataContext = {
   endpoint: string;
@@ -15,33 +15,6 @@ type DataEndPoints = {
   persoon: string;
   persoonGeschenk: string;
   document: string;
-};
-
-export const contexts: { [context: string]: DataContext } = {
-  persoon: {
-    endpoint: "Persoon",
-    filename: "persoon",
-  },
-  persoonsGeschenk: {
-    endpoint: "PersoonGeschenk",
-    filename: "persoonGeschenk",
-  },
-  document: {
-    endpoint: "document",
-    filename: "document",
-  },
-  persoonReis: {
-    endpoint: "PersoonReis",
-    filename: "persoonReis",
-  },
-  nevenFunctie: {
-    endpoint: "PersoonNevenfunctie",
-    filename: "nevenFunctie",
-  },
-  nevenFunctieInkomsten: {
-    endpoint: "PersoonNevenfunctieInkomsten",
-    filename: "nevenFunctieInkomsten",
-  },
 };
 
 export class DataRetriever {
@@ -94,7 +67,7 @@ export class DataRetriever {
       );
 
       console.log("Response: ", response);
-      this.getDataRecursive(nextCallSkip, context);
+      await this.getDataRecursive(nextCallSkip, context);
     }
   }
 

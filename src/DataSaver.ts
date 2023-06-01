@@ -1,5 +1,5 @@
 import fs, { promises } from "fs";
-import { DataContext } from "./dataRetriever";
+import { DataContext } from "./DataRetriever/dataRetriever";
 import { Person } from "./ts/types/Person";
 
 export const DataSaver = {

@@ -60,4 +60,11 @@ export const contexts: Map<string, DataContext> = new Map([
       filename: "fractie",
     },
   ],
+  [
+    "document",
+    {
+      endpoint: "Document",
+      filename: "document",
+    },
+  ],
 ]);
